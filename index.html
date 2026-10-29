@@ -1203,8 +1203,8 @@ const unb64u=str=>{ const s=atob(str.replace(/-/g,"+").replace(/_/g,"/")); retur
 async function pipe(bytes,stream){ return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer()); }
 async function packMatch(mid){
   const m=S.matches[mid]; if(!m) return "";
-  const ids=new Set([...["A","B","C"].flatMap(t=>m.teams[t].players),...m.absents]);
-  const players={}; ids.forEach(id=>{ if(S.players[id]) players[id]=S.players[id]; });
+  // Tout l'effectif voyage avec le match, pour pouvoir composer avec les joueurs non répartis
+  const players={...S.players};
   const bytes=new TextEncoder().encode(JSON.stringify({v:1,mid,match:m,players}));
   if(window.CompressionStream) return "m1="+b64u(await pipe(bytes,new CompressionStream("deflate-raw")));
   return "m0="+b64u(bytes);
@@ -1239,7 +1239,7 @@ function openShareModal(mid){
   $("#modal-root").innerHTML=`<div class="modal-bg" data-act="modal-bg"><form class="modal" id="sform" role="dialog" aria-modal="true" aria-labelledby="sm-t">
     <div class="modal-h"><h2 id="sm-t">Envoyer par lien</h2><button type="button" class="iconbtn" data-act="close">${ICON.x}</button></div>
     <div class="modal-b">
-      <p style="margin:0">Ce lien contient <b>uniquement le match vs ${esc(m.adversaire||"adversaire")}</b> et ses joueurs. Ouvert sur un autre appareil, il y crée une copie que tu peux modifier en local.</p>
+      <p style="margin:0">Ce lien contient <b>uniquement le match vs ${esc(m.adversaire||"adversaire")}</b> et ton effectif (${Object.keys(S.players).length} joueurs), y compris ceux qui ne sont dans aucune équipe. Les autres matchs ne sont pas inclus. Ouvert sur un autre appareil, il y crée une copie que tu peux modifier en local.</p>
       ${isOnline()?"":`<label class="fld">Adresse de ton application en ligne<input id="s-url" type="url" placeholder="https://ton-compte.github.io/feuilles-de-match/" value="${esc(onlineBase())}"></label>`}
       <label class="fld">Lien du match<textarea id="s-link" readonly rows="4" style="font-size:12px;word-break:break-all" placeholder="${isOnline()?"":"Renseigne d'abord l'adresse de l'application en ligne"}"></textarea></label>
       <p style="margin:0;font-size:13px;color:var(--muted)">⚠ Toute personne qui reçoit ce lien peut voir le match : envoie-le uniquement à toi-même (AirDrop, note, message à toi-même).</p>
@@ -1270,7 +1270,7 @@ function openImportModal(){
   $("#modal-root").innerHTML=`<div class="modal-bg" data-act="modal-bg"><form class="modal" id="iform" role="dialog" aria-modal="true" aria-labelledby="im-t">
     <div class="modal-h"><h2 id="im-t">Importer un lien</h2><button type="button" class="iconbtn" data-act="close">${ICON.x}</button></div>
     <div class="modal-b">
-      <p style="margin:0">Colle ici le lien d'un match reçu depuis un autre appareil. Le match et ses joueurs seront ajoutés, ou mis à jour s'ils existent déjà.</p>
+      <p style="margin:0">Colle ici le lien d'un match reçu depuis un autre appareil. Le match et l'effectif seront ajoutés, ou mis à jour s'ils existent déjà.</p>
       <label class="fld">Lien du match<textarea id="i-link" rows="4" style="font-size:12px;word-break:break-all" placeholder="https://…#m1=…"></textarea></label>
     </div>
     <div class="modal-f"><span class="spacer"></span><button type="button" class="btn" data-act="close">Annuler</button><button class="btn primary" type="submit">Importer</button></div>
