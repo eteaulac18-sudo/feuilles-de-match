@@ -328,6 +328,16 @@ input[type=range]{accent-color:var(--accent);width:100%}
 #print-root .pr-lines{margin-top:12px}
 #print-root .pr-lines div{border-bottom:1px dotted #999;height:22px}
 #print-root .pr-foot{position:absolute;left:12mm;right:12mm;bottom:7mm;display:flex;justify-content:space-between;font-size:10px;color:#555}
+/* préparation */
+#print-root .pr-prep{padding-bottom:18mm}
+#print-root .pr-teams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6mm}
+#print-root .pr-team{border-top:2.5px solid #111;padding-top:6px;min-width:0;break-inside:avoid}
+#print-root .pr-team h3{font-size:16px;margin:0}
+#print-root .pr-tm{font-size:11.5px;color:#555;margin:0 0 4px}
+#print-root .pr-gr{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#555;margin:10px 0 3px}
+#print-root .pr-team .pr-sub{padding:2px 0;font-size:13px;border-bottom:1px solid #eee}
+#print-root .pr-abs{margin-top:8mm;border-top:2.5px solid #111;padding-top:6px;break-inside:avoid}
+#print-root .pr-abs .pr-sub{font-size:13px}
 /* export final aux couleurs du club */
 #print-root .club{--navy:#1f3358;--sky:#8ec4e8;--sky-2:#d6eaf8;--sky-3:#eef6fc;color:#1b2740;padding:0}
 #print-root .club .pr-in{padding:0 12mm}
@@ -715,7 +725,8 @@ function renderPrep(m){
         : `<div class="ph">Glissez des joueurs ici${t==="B"?"<br>Ils seront disponibles dans l'onglet Coaching":""}</div>`}</div>
     </section>`; };
   if(!Object.keys(S.players).length) return `<div class="empty"><h3>Aucun joueur dans l'effectif</h3><p>Les compositions se font uniquement avec les joueurs de votre effectif.</p><button class="btn primary" data-act="go-players">Créer mes joueurs</button></div>`;
-  return `<div class="prep">
+  return `${isOnline()?`<div class="row" style="justify-content:flex-end;margin-bottom:12px"><button class="btn primary" data-act="export-prep" title="Équipes A, B, C et absents du week-end en PDF">Export PDF</button></div>`:""}
+  <div class="prep">
     <aside class="panel pool dz" data-drop="pool">
       <div class="row"><p class="eyebrow">Joueurs disponibles · ${pool.length}</p></div>
       <div class="list">${pool.map(p=>chip(p,{src:"pool"})).join("") || `<p style="color:var(--muted);font-size:13px">Tous les joueurs sont répartis.</p>`}</div>
@@ -989,6 +1000,7 @@ document.addEventListener("click",e=>{
     case "but-del": m.buts.splice(+el.dataset.i,1); saveNow("matches",UI.matchId); render(); break;
     case "export-coach": printSheets(exportCoach(m),"landscape",exportName("Coaching",m)); break;
     case "export-final": printSheets(exportFinal(m),"portrait",exportName("Compte rendu",m)); break;
+    case "export-prep": printSheets(exportPrep(m),"portrait",exportName("Préparation",m)); break;
     case "share-match": openShareModal(UI.matchId); break;
     case "import-link": openImportModal(); break;
   }
@@ -1119,6 +1131,22 @@ function exportCoach(m){
         <div class="pr-lines">${"<div></div>".repeat(items.length>6?2:4)}</div></div>
     </div>
     <div class="pr-foot"><span>Feuilles de match · ${CLUB}</span><span>Capitaine : ${cap?esc(shortName(cap)):"—"}</span></div>
+  </section>`;
+}
+function exportPrep(m){
+  const I=prInfos(m);
+  const line=p=>`<div class="pr-sub"><span class="pr-n">${esc(p.num||"–")}</span>${esc(shortName(p))}</div>`;
+  const team=t=>{ const T=m.teams[t], ps=T.players.map(id=>S.players[id]).filter(Boolean);
+    const groups=POSTES.map(g=>({g,ps:sortPlayers(ps.filter(p=>p.poste===g.k))})).filter(x=>x.ps.length);
+    return `<section class="pr-team"><h3>Équipe ${t}</h3><p class="pr-tm">${ps.length} joueur${ps.length>1?"s":""} · ${esc(T.formation)}</p>
+      ${groups.map(x=>`<p class="pr-gr">${x.g.l}s · ${x.ps.length}</p>${x.ps.map(line).join("")}`).join("")||`<p class="pr-tm">Aucun joueur</p>`}</section>`; };
+  const abs=sortPlayers(m.absents.map(id=>S.players[id]).filter(Boolean));
+  return `<section class="pr-sheet pr-port pr-grow pr-prep">
+    <div class="pr-hd"><img src="${LOGO()}" alt=""><div class="pr-t"><small>${esc(m.competition||"Match")} · ${I.lieu}</small><b class="pr-cond">${CLUB} vs ${I.adv}</b></div>
+      <div class="pr-meta"><strong>${I.date}${m.heure?" · "+esc(m.heure):""}</strong>Préparation du match</div></div>
+    <div class="pr-teams">${team("A")}${team("B")}${team("C")}</div>
+    <section class="pr-abs"><h3>Absents du week-end · ${abs.length}</h3><div class="pr-subs">${abs.map(line).join("")||`<p class="pr-tm">Aucun absent</p>`}</div></section>
+    <div class="pr-foot"><span>Feuilles de match · ${CLUB}</span><span>Préparation</span></div>
   </section>`;
 }
 function exportFinal(m){
