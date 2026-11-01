@@ -293,7 +293,6 @@ input[type=range]{accent-color:var(--accent);width:100%}
 #print-root .pr-land{width:297mm;height:209mm}
 #print-root .pr-port{width:210mm;height:296mm}
 #print-root .pr-port.pr-grow{height:auto;min-height:296mm}
-#print-root .pr-land.pr-flow{height:auto;min-height:209mm;overflow:visible}
 #print-root .pr-cond{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif}
 #print-root h3{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.08em}
 #print-root p{margin:0}
@@ -355,10 +354,6 @@ input[type=range]{accent-color:var(--accent);width:100%}
 #print-root .club .pr-strip{background:var(--sky);color:var(--navy);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12mm;margin-bottom:7mm}
 #print-root .club h3{color:var(--navy);display:flex;align-items:center;gap:8px;font-size:15px;letter-spacing:.06em}
 #print-root .club h3::before{content:"";width:5px;height:15px;border-radius:2px;background:var(--sky)}
-#print-root .club .pr-grid{display:grid;grid-template-columns:120mm 1fr;gap:6mm}
-#print-root .club .pr-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5mm;padding-top:25px}
-#print-root .club.pr-land .pr-band{padding:6mm 12mm 5mm}
-#print-root .club.pr-land .pr-strip{margin-bottom:5mm}
 #print-root .club .pr-pitch{width:120mm;aspect-ratio:68/80;border:2px solid var(--navy);border-radius:6px;overflow:hidden;background:repeating-linear-gradient(180deg,var(--sky-2) 0 10%,var(--sky-3) 10% 20%)}
 #print-root .club .pr-pitch svg{stroke:#fff;stroke-width:.55}
 #print-root .club .pr-pl .pr-n{background:var(--navy);border:2px solid #fff}
@@ -381,24 +376,47 @@ input[type=range]{accent-color:var(--accent);width:100%}
 #print-root .club .pr-card th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--navy);border-bottom:1.5px solid var(--sky)}
 #print-root .club .pr-card td{border-bottom:1px solid #e3edf6}
 #print-root .club .pr-foot{color:var(--navy);border-top:1.5px solid var(--sky);padding-top:4px;bottom:6mm}
-#print-root .club.pr-flow .pr-foot{position:static;margin:8mm 12mm 6mm}
-#print-root .club.pr-flow h3{break-after:avoid}
-#print-root .club .pr-zt{margin-bottom:6mm}
-#print-root .club .pr-zt td{padding:7px 9px;border-bottom:1px solid var(--sky-2);font-size:12.5px;white-space:pre-wrap}
-#print-root .club .pr-zt tr{break-inside:avoid}
-#print-root .club .pr-zt tr:nth-child(even) td{background:var(--sky-3)}
-#print-root .club .pr-zt td:first-child{width:180px;font-weight:700;color:var(--navy);font-size:12px;text-transform:uppercase;letter-spacing:.06em;white-space:normal}
-#print-root .club .pr-zt tr.pr-ex td{background:var(--navy);color:#fff;border-bottom:none}
-#print-root .club .pr-zt tr.pr-ex td:first-child{color:var(--sky)}
-#print-root .club table.pr-coms{position:relative;z-index:1}
-#print-root .club .pr-coms th{background:var(--navy);color:#fff;padding:6px 7px;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
-#print-root .club .pr-coms td{border-bottom:1px solid var(--sky-2);padding:6px 7px;white-space:pre-wrap}
-#print-root .club .pr-coms tr{break-inside:avoid}
-#print-root .club .pr-coms tr:nth-child(even) td{background:var(--sky-3)}
-#print-root .club .pr-coms td:first-child{width:36px}
-#print-root .club .pr-coms td:first-child span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:11.5px}
-#print-root .club .pr-coms td.pr-who{width:165px;color:var(--navy);white-space:normal}
-#print-root .club .pr-coms .pr-badges{font-size:11px;color:#33435e;font-weight:400}
+/* compte rendu : page 1 composition + bilan, page 2 tous les commentaires */
+#print-root .club.pr-land .pr-band{padding:5mm 12mm 4mm}
+#print-root .club.pr-f1 .pr-strip{margin-bottom:4mm}
+#print-root .pr-f1g{display:grid;grid-template-columns:98mm minmax(0,1fr);gap:6mm}
+#print-root .pr-f1l,#print-root .pr-f1r{height:150mm;display:flex;flex-direction:column;min-width:0}
+#print-root .club .pr-f1 .pr-pitch,#print-root .club.pr-f1 .pr-pitch{width:98mm;flex:none}
+#print-root .club.pr-f1 .pr-pitch .pr-n{width:24px;height:24px;font-size:12px}
+#print-root .club.pr-f1 .pr-pl .pr-nm{font-size:10px;margin-top:1px}
+#print-root .club.pr-f1 .pr-pl .pr-bd{font-size:8.5px;margin-top:1px;padding:0 4px}
+#print-root .club.pr-f1 .pr-pl .pr-stars{font-size:9.5px}
+#print-root .club.pr-f1 .pr-pl .pr-c{right:-8px;top:-5px;font-size:8px;line-height:10px}
+#print-root .club.pr-f1 .pr-f1l .pr-card{margin:3mm 0 0;flex:1;min-height:0}
+#print-root .pr-subsrow{display:grid;grid-template-columns:1fr;gap:0}
+#print-root .club .pr-subsrow .pr-row{padding:1px 0;font-size:10.5px;gap:4px}
+#print-root .club .pr-subsrow .pr-n{width:18px;height:18px;font-size:9.5px}
+#print-root .club .pr-subsrow .pr-bd{font-size:9px}
+#print-root .pr-f1top{display:grid;grid-template-columns:62mm minmax(0,1fr);gap:4mm;flex:none}
+#print-root .club .pr-f1top .pr-card{margin-bottom:3mm}
+#print-root .club .pr-f1top .pr-cb{padding:3px 8px}
+#print-root .club .pr-f1top .pr-starline{padding:1px 0;font-size:11.5px}
+#print-root .club .pr-f1top table{font-size:11px}
+#print-root .club .pr-f1top th,#print-root .club .pr-f1top td{padding:2px 4px}
+#print-root .pr-zg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.5mm;flex:1;min-height:0;overflow:hidden;font-size:var(--fz,11.5px);line-height:1.32}
+#print-root .club .pr-z{background:var(--sky-3);border-top:3px solid var(--sky);border-radius:5px;padding:4px 7px;white-space:pre-wrap;min-width:0}
+#print-root .club .pr-z b{display:block;color:var(--navy);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;white-space:normal}
+#print-root .club .pr-z.pr-ex{background:var(--navy);color:#fff}
+#print-root .club .pr-z.pr-ex b{color:var(--sky)}
+#print-root .club .pr-mini{background:var(--navy);color:#fff;display:flex;align-items:center;gap:10px;padding:3mm 12mm;border-bottom:3px solid var(--sky)}
+#print-root .club .pr-mini img{width:30px;height:30px;border-radius:50%;background:#fff}
+#print-root .club .pr-mini b{font-size:20px;text-transform:uppercase;letter-spacing:.02em}
+#print-root .club .pr-mini span{color:#c9dcf0;font-size:11.5px}
+#print-root .club .pr-mini .pr-minisc{margin-left:auto;background:var(--sky);color:var(--navy);font-size:18px;font-weight:800;padding:1px 10px;border-radius:6px}
+#print-root .pr-pg{height:176mm;margin:4mm 12mm 0;column-count:2;column-gap:7mm;column-fill:balance;overflow:hidden;font-size:var(--fz,11.5px);line-height:1.32}
+#print-root .club .pr-e{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px;break-inside:avoid;padding:3px 0 4px;border-bottom:1px solid var(--sky-2)}
+#print-root .club .pr-en{width:20px;height:20px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800;font-size:10px}
+#print-root .club .pr-e b{color:var(--navy)}
+#print-root .club .pr-eb{margin-left:7px;font-size:10px;color:#33435e}
+#print-root .club .pr-e p{white-space:pre-wrap}
+/* si le texte ne tient pas à la taille minimale, il continue sur une page suivante plutôt que d'être coupé */
+#print-root .pr-sheet.pr-over,#print-root .pr-over .pr-f1l,#print-root .pr-over .pr-f1r,#print-root .pr-over .pr-pg,#print-root .pr-over .pr-zg{height:auto;overflow:visible}
+#print-root .club.pr-over .pr-foot{position:static;margin:6mm 12mm 5mm}
 </style>
 
 <header class="top">
@@ -1163,37 +1181,49 @@ function exportFinal(m){
   const stars=Object.entries(m.coaching.etoiles).filter(([,pid])=>S.players[pid]).sort((a,b)=>b[0]-a[0]);
   const buts=[...m.buts].sort((a,b)=>(parseInt(a.min)||999)-(parseInt(b.min)||999));
   const all=[...L.xi.filter(x=>x.p).map(x=>({p:x.p,n:x.s.n})),...L.subs].sort((a,b)=>a.n-b.n);
-  const zone=c=>`<tr${c.k==="exercice"?` class="pr-ex"`:""}><td>${c.k==="exercice"?"Exercices à travailler":c.l}</td><td>${esc((R.cats[c.k]||"").trim()||"—")}</td></tr>`;
-  const page1=`<section class="pr-sheet pr-land club">${band(`${I.date}${m.heure?" · "+esc(m.heure):""} · ${esc(m.competition||"Match")} · ${I.lieu}`)}
+  const zone=c=>`<div class="pr-z${c.k==="exercice"?" pr-ex":""}"><b>${c.k==="exercice"?"Exercices à travailler":c.l}</b>${esc((R.cats[c.k]||"").trim()||"—")}</div>`;
+  const page1=`<section class="pr-sheet pr-land club pr-f1">${band(`${I.date}${m.heure?" · "+esc(m.heure):""} · ${esc(m.competition||"Match")} · ${I.lieu}`)}
     <div class="pr-strip">Compte rendu de match · Équipe B · Système ${esc(m.coaching.formation)}</div>
-    <div class="pr-in">
-      <div class="pr-grid">
-        <div><h3>Composition de départ</h3>${prPitch(L,m,true)}</div>
-        <div class="pr-cols"><div>
-          <div class="pr-card"><div class="pr-ch">Remplaçants</div><div class="pr-cb">${L.subs.map(x=>`<div class="pr-row"><span class="pr-n">${x.n}</span><b>${esc(shortName(x.p))}</b>${prBadges(m,x.p.id)}</div>`).join("")||`<p class="pr-none">Aucun remplaçant</p>`}</div></div>
+    <div class="pr-in pr-f1g">
+      <div class="pr-f1l"><h3>Composition de départ</h3>${prPitch(L,m,true)}
+        <div class="pr-card"><div class="pr-ch">Remplaçants</div><div class="pr-cb pr-subsrow">${L.subs.map(x=>`<div class="pr-row"><span class="pr-n">${x.n}</span><b>${esc(shortName(x.p))}</b>${prBadges(m,x.p.id)}</div>`).join("")||`<p class="pr-none">Aucun remplaçant</p>`}</div></div>
+      </div>
+      <div class="pr-f1r">
+        <div class="pr-f1top">
           <div class="pr-card"><div class="pr-ch">Étoiles du match</div><div class="pr-cb">${stars.map(([n,pid])=>`<div class="pr-starline"><span class="pr-stars">${"★".repeat(+n)}</span><b>${nameOf(pid)}</b></div>`).join("")||`<p class="pr-none">Non attribuées</p>`}</div></div>
-        </div><div>
           <div class="pr-card"><div class="pr-ch">Buts et passes décisives</div><div class="pr-cb">${buts.length?`<table><thead><tr><th>Min.</th><th>Buteur</th><th>Passeur</th></tr></thead>
             <tbody>${buts.map(b=>`<tr><td>${b.min?esc(b.min)+"'":"—"}</td><td><b>${nameOf(b.buteur)}</b></td><td>${b.passeur?nameOf(b.passeur):"—"}</td></tr>`).join("")}</tbody></table>`:`<p class="pr-none">Aucun but enregistré</p>`}</div></div>
-        </div></div>
+        </div>
+        <h3>Bilan par zone</h3>
+        <div class="pr-zg pr-fit" data-max="11.5">${SUM_CATS.map(zone).join("")}</div>
       </div>
     </div>
     <div class="pr-foot"><span>Feuilles de match · ${CLUB}</span><span>Compte rendu · vs ${I.adv}</span></div>
   </section>`;
-  const page2=`<section class="pr-sheet pr-land pr-flow club">${band(`Bilan du match · ${I.date}`)}
-    <div class="pr-strip">Bilan par zone et commentaires par joueur · Équipe B</div>
-    <div class="pr-in"><h3>Bilan par zone</h3><table class="pr-zt"><tbody>${SUM_CATS.map(zone).join("")}</tbody></table>
-      <h3>Commentaires par joueur</h3><table class="pr-coms"><thead><tr><th>N°</th><th>Joueur</th><th>Commentaire</th></tr></thead>
-      <tbody>${all.map(x=>`<tr><td><span>${x.n}</span></td><td class="pr-who"><b>${esc(shortName(x.p))}${m.coaching.capitaine===x.p.id?" (C)":""}</b><div class="pr-badges">${prBadges(m,x.p.id,true)}</div></td><td>${esc((R.joueurs[x.p.id]?.com||"").trim()||"—")}</td></tr>`).join("")
-        ||`<tr><td></td><td colspan="2">Aucun joueur dans l'équipe B.</td></tr>`}</tbody></table></div>
+  const page2=`<section class="pr-sheet pr-land club pr-f2">
+    <div class="pr-mini"><img src="${LOGO()}" alt=""><b class="pr-cond">Commentaires par joueur</b><span>vs ${I.adv} · ${I.date}</span><span class="pr-minisc pr-cond">${I.score}</span></div>
+    <div class="pr-pg pr-fit" data-max="13.5">${all.map(x=>`<div class="pr-e"><span class="pr-en">${x.n}</span><div><b>${esc(shortName(x.p))}${m.coaching.capitaine===x.p.id?" (C)":""}</b><span class="pr-eb">${prBadges(m,x.p.id,true)}</span><p>${esc((R.joueurs[x.p.id]?.com||"").trim()||"—")}</p></div></div>`).join("")||`<p>Aucun joueur dans l'équipe B.</p>`}</div>
     <div class="pr-foot"><span>Feuilles de match · ${CLUB}</span><span>Compte rendu · vs ${I.adv}</span></div>
   </section>`;
   return page1+page2;
 }
+// Réduit le texte juste ce qu'il faut pour tenir sur la page ; sinon la page s'allonge plutôt que de couper
+function fitSheets(root){
+  root.style.cssText="display:block;position:absolute;left:-9999px;top:0";
+  $$(".pr-fit",root).forEach(box=>{
+    const over=()=>box.scrollHeight>box.clientHeight+1||box.scrollWidth>box.clientWidth+1;
+    let size=+box.dataset.max; const min=8.5;
+    box.style.setProperty("--fz",size+"px");
+    while(over()&&size>min){ size-=.25; box.style.setProperty("--fz",size+"px"); }
+    if(over()) box.closest(".pr-sheet").classList.add("pr-over");
+  });
+  root.style.cssText="";
+}
 let prTitle=null;
 function printSheets(html,orient,title){
-  $("#print-root").innerHTML=html;
+  const root=$("#print-root"); root.innerHTML=html;
   $("#pr-page").textContent=`@page{size:A4 ${orient};margin:0}`;
+  fitSheets(root);
   prTitle=document.title; document.title=title;
   toast("Choisissez « Enregistrer au format PDF » et cochez « Imprimer les arrière-plans » si besoin");
   setTimeout(()=>window.print(),60);
